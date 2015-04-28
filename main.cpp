@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[])
 {
-    Q_INIT_RESOURCE(systray);
+    Q_INIT_RESOURCE(pp2trayer);
 
     QApplication app(argc, argv);
 

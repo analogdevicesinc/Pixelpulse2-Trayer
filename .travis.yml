@@ -1,0 +1,14 @@
+os: osx
+osx_image: xcode61
+language: objective-c
+before_install:
+- brew update
+- brew install --build-from-source libusb
+- brew install qt5
+- brew linkapps qt5
+before_script: /usr/local/opt/qt5/bin/qmake
+script: 
+- make
+- /usr/local/opt/qt5/bin/macdeployqt pixelpulse2.app -dmg -always-overwrite -verbose=2 -qmldir=qml
+- mkdir deploy
+- cp pp2tray.dmg deploy

@@ -8,7 +8,9 @@ Window::Window()
     createTrayIcon();
 	auto icon = QIcon(":/images/professor.png");
     trayIcon->setIcon(icon);
-    setWindowIcon(icon);
+    trayIcon->show();
+	// use OS-specific window icon set by pp2trayer.pro
+    //setWindowIcon(icon);
 }
 
 void Window::closeEvent(QCloseEvent *event)

@@ -6,7 +6,7 @@ Window::Window()
 {
     createActions();
     createTrayIcon();
-	auto icon = QIcon(":/images/professor.png");
+	auto icon = QIcon(":/icons/professor.png");
     trayIcon->setIcon(icon);
     trayIcon->show();
 	// use OS-specific window icon set by pp2trayer.pro

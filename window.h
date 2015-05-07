@@ -1,8 +1,9 @@
-#ifndef WINDOW_H
-#define WINDOW_H
+#pragma once
 
 #include <QSystemTrayIcon>
 #include <QDialog>
+#include <libusb.h>
+
 
 QT_BEGIN_NAMESPACE
 class ACtion;
@@ -11,7 +12,6 @@ QT_END_NAMESPACE
 class Window : public QDialog
 {
     Q_OBJECT
-
 public:
     Window();
 
@@ -36,4 +36,3 @@ private:
     QMenu* trayIconMenu;
 };
 
-#endif // WINDOW_H

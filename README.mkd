@@ -1,0 +1,1 @@
+This project contains a minimalist system-tray application which utilises LibUSB's device hotplug support to launch [Pixelpulse2](https://github.com/analogdevicesinc/Pixelpulse2) when an [ADALM1000](http://www.analog.com/m1k.html) device is attached to a PC running Windows, Linux, or OSX.

@@ -20,7 +20,7 @@ DEFINES += BUILD_DATE='"\\\"$(shell date +%F)\\\""'
 
 SOURCES += main.cpp window.cpp
 
-HEADERS += window.h
+HEADERS += window.h pixelpulse2_wrap.h
 
 RESOURCES += pp2trayer.qrc
 
@@ -70,5 +70,3 @@ unix:!osx {
 	QMAKE_CFLAGS_DEBUG += -rdynamic
 	QMAKE_CXXFLAGS_DEBUG += -rdynamic
 }
- 
-

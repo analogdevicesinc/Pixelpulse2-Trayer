@@ -8,6 +8,7 @@
 #include <string.h>
 
 #include "window.h"
+#include "pixelpulse2_wrap.h"
 
 using std::cerr;
 using std::endl;
@@ -28,8 +29,9 @@ extern "C" int LIBUSB_CALL hotplug_callback_usbthread(
     }
 
     (void) ctx;
+	PP2Wrapper *pp2wrapper = (PP2Wrapper *)(user_data);
     if ((event == LIBUSB_HOTPLUG_EVENT_DEVICE_ARRIVED) && (desc.idVendor == 0x064B && desc.idProduct == 0x784C))
-		cerr << "m1k attached" << endl;;
+		pp2wrapper->launchPixelpulse2IfNotRunning();
     return 0;
 }
 
@@ -40,7 +42,7 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
     Window window;
-
+	PP2Wrapper pp2wrapper;
     if (int r = libusb_init(&m_usb_cx) != 0) {
         QMessageBox::critical(0, QObject::tr("SysTray"), QObject::tr("I couldn't initialise libusb on this system."));
         return 1;
@@ -55,7 +57,7 @@ int main(int argc, char *argv[])
             LIBUSB_HOTPLUG_MATCH_ANY,
             LIBUSB_HOTPLUG_MATCH_ANY,
             hotplug_callback_usbthread,
-            NULL,
+            (void*)(&pp2wrapper),
             NULL
         ) != 0) {
         cerr << "libusb hotplug cb reg failed: " << r << endl;

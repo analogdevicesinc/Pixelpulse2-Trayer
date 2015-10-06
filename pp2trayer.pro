@@ -28,7 +28,7 @@ RESOURCES += pp2trayer.qrc
 QML_IMPORT_PATH =
 
 win32:debug {
-	CONFIG += console
+#	CONFIG += console
 	LIBS += -limagehlp -ldbghelp
 }
 

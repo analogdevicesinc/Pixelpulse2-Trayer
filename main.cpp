@@ -6,6 +6,7 @@
 #include <thread>
 #include <libusb.h>
 #include <string.h>
+#include <sys/time.h>
 
 #include "window.h"
 #include "pixelpulse2_wrap.h"
@@ -29,9 +30,9 @@ extern "C" int LIBUSB_CALL hotplug_callback_usbthread(
     }
 
     (void) ctx;
-	PP2Wrapper *pp2wrapper = (PP2Wrapper *)(user_data);
+    PP2Wrapper *pp2wrapper = (PP2Wrapper *)(user_data);
     if ((event == LIBUSB_HOTPLUG_EVENT_DEVICE_ARRIVED) && (desc.idVendor == 0x064B && desc.idProduct == 0x784C))
-		pp2wrapper->launchPixelpulse2IfNotRunning();
+        pp2wrapper->launchPixelpulse2IfNotRunning();
     return 0;
 }
 
@@ -42,7 +43,7 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
     Window window;
-	PP2Wrapper pp2wrapper;
+    PP2Wrapper pp2wrapper;
     if (int r = libusb_init(&m_usb_cx) != 0) {
         QMessageBox::critical(0, QObject::tr("SysTray"), QObject::tr("I couldn't initialise libusb on this system."));
         return 1;
@@ -66,8 +67,13 @@ int main(int argc, char *argv[])
         QMessageBox::critical(0, QObject::tr("SysTray"), QObject::tr("I couldn't detect libusb hotplug support on this system."));
         return 1;
     }
+    static timeval t;
+    t.tv_sec = 0;
+    t.tv_usec = 100000;
     auto m_usb_thread = std::thread([=]() {
-        while(m_usb_thread_loop) libusb_handle_events(m_usb_cx);
+        while(m_usb_thread_loop) {
+            libusb_handle_events_timeout_completed(m_usb_cx, &t, 0);
+        }
     });
 
     if (getenv("LIBUSB_DEBUG")) {
@@ -80,5 +86,9 @@ int main(int argc, char *argv[])
     }
 
     QApplication::setQuitOnLastWindowClosed(false);
-    return app.exec();
+    app.exec();
+    m_usb_thread_loop = false;
+    libusb_exit(m_usb_cx);
+    m_usb_thread.join();
+    return 0;
 }

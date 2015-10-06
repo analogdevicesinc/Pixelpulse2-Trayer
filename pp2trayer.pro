@@ -13,7 +13,7 @@ unix {
 QMAKE_CFLAGS_DEBUG += -ggdb
 QMAKE_CXXFLAGS_DEBUG += -ggdb
 
-CFLAGS += -v -static -static-libgcc -static-libstdc++ -g
+CFLAGS += -v -static -static-libgcc -static-libstdc++ -g -mthreads
 
 DEFINES += GIT_VERSION='"\\\"$(shell git -C $$PWD describe --always --tags --abbrev)\\\""'
 DEFINES += BUILD_DATE='"\\\"$(shell date +%F)\\\""'

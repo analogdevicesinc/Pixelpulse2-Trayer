@@ -18,10 +18,14 @@ public:
 protected:
     void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
 
+signals:
+	deactivateChanged(bool);
+
 private slots:
     void showMessage();
 	void iconActivated(QSystemTrayIcon::ActivationReason reason);
     void messageClicked();
+    void deactivate(bool);
 
 private:
     void createIconGroupBox();
@@ -31,6 +35,7 @@ private:
 
 private:
     QAction* quitAction;
+    QAction* deactivateAction;
 
     QSystemTrayIcon* trayIcon;
     QMenu* trayIconMenu;

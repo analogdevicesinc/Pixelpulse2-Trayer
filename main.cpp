@@ -85,6 +85,9 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    QObject::connect(&window, SIGNAL(deactivateChanged(bool)),
+	&pp2wrapper, SLOT(setDisabled(bool)));
+
     QApplication::setQuitOnLastWindowClosed(false);
     app.exec();
     m_usb_thread_loop = false;

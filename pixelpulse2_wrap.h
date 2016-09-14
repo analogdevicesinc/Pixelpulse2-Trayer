@@ -13,7 +13,12 @@ class PP2Wrapper: public QObject
 {
     Q_OBJECT
 
+    bool isDisabled() { return disabled; }
+
 public slots:
+
+    void setDisabled(bool state) { disabled = state; }
+
     QString getPP2Name() {
     #ifdef Q_OS_LINUX
         return "pixelpulse2";
@@ -60,16 +65,23 @@ public slots:
     }
 
     bool launchPixelpulse2() {
-        //QObject *parent;
         QProcess pp2Thread;
         QString program = getPP2Name();
         QStringList arguments;
+
+        if (disabled)
+		return false;
+
         pp2Thread.startDetached(program, arguments);
         return pp2Thread.waitForStarted(5000);
     }
 
 public:
-    PP2Wrapper() {}
+    PP2Wrapper():
+        disabled(false) {}
+
+private:
+    bool disabled;
 };
 
 #endif // PP2_H

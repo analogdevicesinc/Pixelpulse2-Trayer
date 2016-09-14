@@ -51,18 +51,30 @@ void Window::messageClicked()
                              tr("Sorry, I alreaady gave what help I could."));
 }
 
+void Window::deactivate(bool status)
+{
+    emit deactivateChanged(status);
+}
+
 
 void Window::createActions()
 {
 
     quitAction = new QAction(tr("&Quit"), this);
+
+    deactivateAction = new QAction(tr("&Deactivate"), this);
+    deactivateAction->setCheckable(true);
+
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(deactivateAction, SIGNAL(triggered(bool)),
+        this, SLOT(deactivate(bool)));
 }
 
 void Window::createTrayIcon()
 {
     trayIconMenu = new QMenu(this);
     trayIconMenu->addAction(quitAction);
+    trayIconMenu->addAction(deactivateAction);
 
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);

@@ -19,7 +19,7 @@ protected:
     void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
 
 signals:
-	deactivateChanged(bool);
+    void deactivateChanged(bool);
 
 private slots:
     void showMessage();

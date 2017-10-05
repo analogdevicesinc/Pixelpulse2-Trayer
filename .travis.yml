@@ -9,7 +9,7 @@ before_install:
 before_script: /usr/local/opt/qt5/bin/qmake
 script:
 - make
-- /usr/local/opt/qt5/bin/macdeployqt pp2trayer.app -always-overwrite -verbose=2 -qmldir=qml
+- /usr/local/opt/qt5/bin/macdeployqt pp2trayer.app -always-overwrite -verbose=2
 - curl -o /tmp/macdeployqtfix.py https://raw.githubusercontent.com/aurelien-rainone/macdeployqtfix/master/macdeployqtfix.py
 - python /tmp/macdeployqtfix.py ./pp2trayer.app/Contents/MacOS/pp2trayer /usr/local/Cellar/qt5/5.5.0_1/
 - /usr/local/opt/qt5/bin/macdeployqt pp2trayer.app -dmg -no-plugins

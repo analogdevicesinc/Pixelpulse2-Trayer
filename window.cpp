@@ -2,15 +2,23 @@
 #include "window.h"
 
 // http://qt-project.org/doc/qt-4.8/desktop-systray.html
-Window::Window()
+Window::Window():
+settings("Pixelpulse2-Trayer","Pixelpulse2-Trayer")
 {
     createActions();
     createTrayIcon();
 	auto icon = QIcon(":/icons/professor.png");
     trayIcon->setIcon(icon);
     trayIcon->show();
+    settings.setDefaultFormat(QSettings::defaultFormat());
 	// use OS-specific window icon set by pp2trayer.pro
     //setWindowIcon(icon);
+}
+
+void Window::setDisabled(PP2Wrapper &pp2wrapper){
+    bool deactiv = settings.value("deactivate").toBool();
+    deactivateAction->setChecked(deactiv);
+    pp2wrapper.setDisabled(deactiv);
 }
 
 void Window::closeEvent(QCloseEvent *event)
@@ -54,6 +62,8 @@ void Window::messageClicked()
 void Window::deactivate(bool status)
 {
     emit deactivateChanged(status);
+    settings.setValue("deactivate", status);
+    settings.sync();
 }
 
 

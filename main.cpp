@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     Window window;
     PP2Wrapper pp2wrapper;
+    window.setDisabled(pp2wrapper);
     if (int r = libusb_init(&m_usb_cx) != 0) {
         QMessageBox::critical(0, QObject::tr("SysTray"), QObject::tr("I couldn't initialise libusb on this system."));
         return 1;

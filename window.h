@@ -3,7 +3,8 @@
 #include <QSystemTrayIcon>
 #include <QDialog>
 #include <libusb.h>
-
+#include <QSettings>
+#include "pixelpulse2_wrap.h"
 
 QT_BEGIN_NAMESPACE
 class ACtion;
@@ -14,6 +15,7 @@ class Window : public QDialog
     Q_OBJECT
 public:
     Window();
+    void setDisabled(PP2Wrapper &);
 
 protected:
     void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
@@ -39,5 +41,6 @@ private:
 
     QSystemTrayIcon* trayIcon;
     QMenu* trayIconMenu;
+    QSettings settings;
 };
 

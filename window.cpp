@@ -8,6 +8,7 @@ settings("Pixelpulse2-Trayer","Pixelpulse2-Trayer")
     createActions();
     createTrayIcon();
 	auto icon = QIcon(":/icons/professor.png");
+    trayIcon->setToolTip("Pixelpulse2 - Trayer");
     trayIcon->setIcon(icon);
     trayIcon->show();
     settings.setDefaultFormat(QSettings::defaultFormat());

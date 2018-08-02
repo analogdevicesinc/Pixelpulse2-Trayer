@@ -1,15 +1,13 @@
-os: unstable
-
+os: Windows Server 2012 R2
 platform:
  - x86
 
 install:
-  - ps: (new-object System.Net.WebClient).Downloadfile("https://downloads.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/4.9.2/threads-posix/dwarf/i686-4.9.2-release-posix-dwarf-rt_v3-rev0.7z", "c:\mingw.7z")
-  - 7z x -y "c:\mingw.7z" -o"C:\" > nul
   - ps: (new-object System.Net.WebClient).Downloadfile("http://sourceforge.net/projects/mingw-w64/files/External%20binary%20packages%20%28Win64%20hosted%29/MSYS%20%2832-bit%29/MSYS-20111123.zip", "c:\msys.zip")
   - 7z x -y "c:\msys.zip" -o"C:\" > nul
-  - set QTDIR=C:\Qt\5.4\mingw491_32
-  - set PATH=C:\Program Files (x86)\MSBuild\12.0\bin\;C:\mingw32\bin;C:\msys\bin\;%QTDIR%\bin;%PATH%
+  - set MINGW_PATH=C:\Qt\Tools\mingw530_32
+  - set QTDIR=C:\Qt\5.10\mingw53_32
+  - set PATH=C:\Program Files (x86)\MSBuild\12.0\bin\;%MINGW_PATH%\bin;C:\msys\bin\;%QTDIR%\bin;%PATH%
   - ps: (new-object System.Net.WebClient).Downloadfile("http://swdownloads.analog.com/cse/build/libusb-1.0-hp.7z", "c:\libusb.7z")
   - 7z x -y "c:\libusb.7z" -o"C:\libusb" > nul
 
@@ -29,5 +27,4 @@ after_build:
 
 cache:
  - distrib.zip -> pp2trayer.pro
- - c:\mingw.7z -> pp2trayer.pro
- - c:\msys.zip -> pp2trayer.pro
+ - c:\msys.zip -> appveyor.yml
